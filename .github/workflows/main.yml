@@ -38,6 +38,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker pull $IMAGE_NAME:latest
+            docker pull $kelomi44/weddinglite:latest
             docker stop weddinglite || true && docker rm weddinglite || true
-            docker run -d --name weddinglite -p 80:80 $IMAGE_NAME:latest
+            docker run -d --name weddinglite -p 80:80 $kelomi44/weddinglite:latest
