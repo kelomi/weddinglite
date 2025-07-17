@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: kelomi44/weddinglite  # This sets the global variable
+  IMAGE_NAME: kelomi44/weddinglite  # This sets the variable globally
 
 jobs:
   build-and-push:
@@ -23,14 +23,15 @@ jobs:
 
       - name: Build and push Docker image
         run: |
+          echo "Building and pushing image: $IMAGE_NAME:latest"
           docker build -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:latest
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
-    env:  # ✅ Add this block
-      IMAGE_NAME: kelomi44/weddinglite
+    **env:**
+      **IMAGE_NAME: kelomi44/weddinglite**  # ✅ Explicitly declare here
 
     steps:
       - name: Deploy on EC2
