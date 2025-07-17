@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: yourdockerhubusername/static-site
+  IMAGE_NAME: kelomi44/weddinglite
 
 jobs:
   build-and-push:
