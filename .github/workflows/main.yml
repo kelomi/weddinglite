@@ -39,5 +39,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker pull $IMAGE_NAME:latest
-            docker stop static-site || true && docker rm static-site || true
-            docker run -d --name static-site -p 80:80 $IMAGE_NAME:latest
+            docker stop weddinglite || true && docker rm weddinglite || true
+            docker run -d --name weddinglite -p 80:80 $IMAGE_NAME:latest
