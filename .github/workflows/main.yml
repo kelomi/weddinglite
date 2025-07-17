@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: kelomi44/weddinglite  # This sets the variable globally
+  IMAGE_NAME: kelomi44/weddinglite
 
 jobs:
   build-and-push:
@@ -23,15 +23,12 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          echo "Building and pushing image: $IMAGE_NAME:latest"
           docker build -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:latest
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
-    **env:**
-      **IMAGE_NAME: kelomi44/weddinglite**  # ✅ Explicitly declare here
 
     steps:
       - name: Deploy on EC2
@@ -41,7 +38,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            echo "Pulling image: $IMAGE_NAME:latest"
-            docker pull $IMAGE_NAME:latest
-            docker stop weddinglite || true && docker rm weddinglite || true
-            docker run -d --name weddinglite -p 80:80 $IMAGE_NAME:latest
+            docker pull ${{ env.IMAGE_NAME }}:latest
+            docker stop weddinglite || true
+            docker rm weddinglite || true
+            docker run -d --name weddinglite -p 80:80 ${{ env.IMAGE_NAME }}:latest
